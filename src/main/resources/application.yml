@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:apiroupas
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties.hibernate.show_SQL: true
+    properties.hibernate.format_SQL: true
+
+  h2:
+    console:
+      enabled: true
+      path: /h2

@@ -1,13 +1,12 @@
-package com.albertojbe.apiroupas.Controllers;
+package com.albertojbe.apiroupas.Controller;
 
-import com.albertojbe.apiroupas.Models.Clothe;
-import com.albertojbe.apiroupas.Services.ClotheServices;
+import com.albertojbe.apiroupas.Model.Clothe;
+import com.albertojbe.apiroupas.Model.DTOs.ClotheDTO;
+import com.albertojbe.apiroupas.Service.ClotheServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/clothe")
@@ -17,17 +16,25 @@ public class ClotheController {
     ClotheServices services;
 
     @GetMapping(value = "")
-    public List<Clothe> findAll(){
+    public List<ClotheDTO> findAll(){
         return services.findAll();
     }
+
     @GetMapping("/{id}")
-    public Optional<Clothe> findById(@PathVariable(value = "id") Long id){
+    public ClotheDTO findById(@PathVariable(value = "id") Long id){
         return services.findById(id);
     }
+
     @PostMapping
     public ResponseEntity<String> addClothe(@RequestBody Clothe clothe){
         return services.create(clothe);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClotheDTO> updateClothe(@RequestBody ClotheDTO clotheDTO, @PathVariable Long id){
+        return services.update(clotheDTO, id);
+    }
+
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> deleteClothe(@PathVariable(value = "id") Long id){
         return services.delete(id);

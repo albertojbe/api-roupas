@@ -1,6 +1,4 @@
-package com.albertojbe.apiroupas.Models.DTOs;
-
-import jakarta.persistence.Column;
+package com.albertojbe.apiroupas.Model.DTOs;
 
 import java.io.Serializable;
 

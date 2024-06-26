@@ -1,4 +1,4 @@
-package com.albertojbe.apiroupas.Models;
+package com.albertojbe.apiroupas.Model;
 
 import jakarta.persistence.*;
 
@@ -16,7 +16,6 @@ public class Clothe implements Serializable {
     private String type;
 
     @Column(name = "marca")
-
     private String brand;
 
     @Column(name = "tamanho")

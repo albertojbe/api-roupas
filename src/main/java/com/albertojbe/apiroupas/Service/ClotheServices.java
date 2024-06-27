@@ -1,12 +1,11 @@
 package com.albertojbe.apiroupas.Service;
 
 import com.albertojbe.apiroupas.Exceptions.ResourceNotFoundResponse;
-import com.albertojbe.apiroupas.Util.Mapper;
+import com.albertojbe.apiroupas.Util.ModelMapper;
 import com.albertojbe.apiroupas.Model.Clothe;
 import com.albertojbe.apiroupas.Model.DTOs.ClotheDTO;
 import com.albertojbe.apiroupas.Repository.ClotheRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,25 +22,25 @@ public class ClotheServices {
     }
 
     public List<ClotheDTO> findAll(){
-        return Mapper.parseObject(repo.findAll(), ClotheDTO.class);
+        return ModelMapper.parseObject(repo.findAll(), ClotheDTO.class);
     }
 
     public ClotheDTO findById(Long id){
         var entity = repo.findById(id).orElseThrow(() -> new ResourceNotFoundResponse("Clothe with this ID not found"));
-        return Mapper.parseObject(entity, ClotheDTO.class);
+        return ModelMapper.parseObject(entity, ClotheDTO.class);
     }
 
     public ResponseEntity<String> create(Clothe clotheDTO){
-        var entity = Mapper.parseObject(clotheDTO, Clothe.class);
+        var entity = ModelMapper.parseObject(clotheDTO, Clothe.class);
         repo.save(entity);
         return new ResponseEntity<>("Clothes created", HttpStatus.CREATED);
     }
 
     public ResponseEntity<ClotheDTO> update(ClotheDTO clotheDTO, Long id){
         Clothe entity = repo.findById(id).orElseThrow(() -> new ResourceNotFoundResponse("Clothe with this ID not found"));
-        Mapper.updateClothe(clotheDTO, entity);
+        ModelMapper.updateClothe(clotheDTO, entity);
         repo.save(entity);
-        return new ResponseEntity<>(Mapper.parseObject(entity, ClotheDTO.class), HttpStatus.CREATED);
+        return new ResponseEntity<>(ModelMapper.parseObject(entity, ClotheDTO.class), HttpStatus.CREATED);
     }
 
     public ResponseEntity<String> delete(Long id){

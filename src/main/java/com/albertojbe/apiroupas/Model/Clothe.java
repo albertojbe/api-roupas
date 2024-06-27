@@ -21,11 +21,12 @@ public class Clothe implements Serializable {
     @Column(name = "tamanho")
     private String size;
 
+    @Column(name = "preço")
+    private String price;
+
     @Column(name = "quantidade")
     private String quantity;
 
-    @Column(name = "preço")
-    private String price;
 
     public Clothe() {
 
@@ -59,8 +60,8 @@ public class Clothe implements Serializable {
         return size;
     }
 
-    public void setSize(String syze) {
-        this.size = syze;
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public String getQuantity() {

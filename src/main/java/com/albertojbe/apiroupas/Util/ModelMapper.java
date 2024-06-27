@@ -3,13 +3,14 @@ package com.albertojbe.apiroupas.Util;
 import com.albertojbe.apiroupas.Model.Clothe;
 import com.albertojbe.apiroupas.Model.DTOs.ClotheDTO;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
+import com.github.dozermapper.core.Mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mapper {
+public class ModelMapper {
 
-    private static com.github.dozermapper.core.Mapper mapper = DozerBeanMapperBuilder.buildDefault();
+    private static final Mapper mapper = DozerBeanMapperBuilder.buildDefault();
 
     public static <O, D> D parseObject(O origin , Class<D> destination) {
         return mapper.map(origin, destination);

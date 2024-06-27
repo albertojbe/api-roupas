@@ -12,8 +12,11 @@ import java.util.List;
 @RequestMapping("/clothe")
 public class ClotheController {
 
-    @Autowired
-    ClotheServices services;
+    private final ClotheServices services;
+
+    public ClotheController(ClotheServices services) {
+        this.services = services;
+    }
 
     @GetMapping(value = "")
     public List<ClotheDTO> findAll(){

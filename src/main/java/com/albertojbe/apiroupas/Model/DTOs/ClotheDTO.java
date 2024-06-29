@@ -1,8 +1,13 @@
 package com.albertojbe.apiroupas.Model.DTOs;
 
+import com.github.dozermapper.core.Mapping;
+import org.springframework.hateoas.RepresentationModel;
+
 import java.io.Serializable;
 
-public class ClotheDTO implements Serializable {
+public class ClotheDTO extends RepresentationModel<ClotheDTO> implements Serializable {
+    @Mapping("id")
+    private long key;
     private String type;
     private String brand;
     private String size;
@@ -11,6 +16,14 @@ public class ClotheDTO implements Serializable {
 
     public ClotheDTO() {
 
+    }
+
+    public long getKey() {
+        return key;
+    }
+
+    public void setKey(long key) {
+        this.key = key;
     }
 
     public String getType() {

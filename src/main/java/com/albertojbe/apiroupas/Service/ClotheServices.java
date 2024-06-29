@@ -1,7 +1,8 @@
 package com.albertojbe.apiroupas.Service;
 
+import com.albertojbe.apiroupas.Controller.ClotheController;
 import com.albertojbe.apiroupas.Exceptions.ResourceNotFoundResponse;
-import com.albertojbe.apiroupas.Util.ModelMapper;
+import com.albertojbe.apiroupas.Util.DozerMapper;
 import com.albertojbe.apiroupas.Model.Clothe;
 import com.albertojbe.apiroupas.Model.DTOs.ClotheDTO;
 import com.albertojbe.apiroupas.Repository.ClotheRepository;
@@ -10,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 @Transactional
@@ -21,26 +24,38 @@ public class ClotheServices {
         this.repo = repo;
     }
 
-    public List<ClotheDTO> findAll(){
-        return ModelMapper.parseObject(repo.findAll(), ClotheDTO.class);
+    public List<ClotheDTO> findAll() throws ResourceNotFoundResponse{
+        List<ClotheDTO> listDto = DozerMapper.parseListObjects(repo.findAll(), ClotheDTO.class);
+        if (listDto.isEmpty()){
+            throw new ResourceNotFoundResponse("No clothes found");
+        }
+        else{
+            for (ClotheDTO dto : listDto){
+                long key = dto.getKey();
+                dto.add(linkTo(methodOn(ClotheController.class).findById(key)).withSelfRel());
+            }
+            return listDto;
+        }
     }
 
     public ClotheDTO findById(Long id){
         var entity = repo.findById(id).orElseThrow(() -> new ResourceNotFoundResponse("Clothe with this ID not found"));
-        return ModelMapper.parseObject(entity, ClotheDTO.class);
+        ClotheDTO dto = DozerMapper.parseObject(entity, ClotheDTO.class);
+        dto.add(linkTo(methodOn(ClotheController.class).findAll()).withSelfRel());
+        return dto;
     }
 
     public ResponseEntity<String> create(Clothe clotheDTO){
-        var entity = ModelMapper.parseObject(clotheDTO, Clothe.class);
+        var entity = DozerMapper.parseObject(clotheDTO, Clothe.class);
         repo.save(entity);
         return new ResponseEntity<>("Clothes created", HttpStatus.CREATED);
     }
 
     public ResponseEntity<ClotheDTO> update(ClotheDTO clotheDTO, Long id){
         Clothe entity = repo.findById(id).orElseThrow(() -> new ResourceNotFoundResponse("Clothe with this ID not found"));
-        ModelMapper.updateClothe(clotheDTO, entity);
+        DozerMapper.updateClothe(clotheDTO, entity);
         repo.save(entity);
-        return new ResponseEntity<>(ModelMapper.parseObject(entity, ClotheDTO.class), HttpStatus.CREATED);
+        return new ResponseEntity<>(DozerMapper.parseObject(entity, ClotheDTO.class), HttpStatus.CREATED);
     }
 
     public ResponseEntity<String> delete(Long id){

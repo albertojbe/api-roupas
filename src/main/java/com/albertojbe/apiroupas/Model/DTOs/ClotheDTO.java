@@ -11,11 +11,20 @@ public class ClotheDTO extends RepresentationModel<ClotheDTO> implements Seriali
     private String type;
     private String brand;
     private String size;
-    private String quantity;
     private String price;
+    private String quantity;
 
     public ClotheDTO() {
 
+    }
+
+    public ClotheDTO(long key, String type, String brand, String size, String price, String quantity) {
+        this.key = key;
+        this.type = type;
+        this.brand = brand;
+        this.size = size;
+        this.price = price;
+        this.quantity = quantity;
     }
 
     public long getKey() {

@@ -19,12 +19,12 @@ public class MockClothe {
         return mockClothe(0);
     }
 
-    public Clothe mockClothe(Integer id){
-        return new Clothe(id.longValue(), TYPE, BRAND, SIZE, PRICE, QUANTITY);
-    }
-
     public ClotheDTO mockClotheDTO(){
         return mockClotheDTO(0);
+    }
+
+    public Clothe mockClothe(Integer id){
+        return new Clothe(id.longValue(), TYPE, BRAND, SIZE, PRICE, QUANTITY);
     }
 
     public ClotheDTO mockClotheDTO(Integer id){

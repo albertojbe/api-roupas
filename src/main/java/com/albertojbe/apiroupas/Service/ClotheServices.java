@@ -45,23 +45,25 @@ public class ClotheServices {
         return dto;
     }
 
-    public ResponseEntity<String> create(Clothe clotheDTO){
+    public ResponseEntity<ClotheDTO> create(ClotheDTO clotheDTO){
         var entity = DozerMapper.parseObject(clotheDTO, Clothe.class);
-        repo.save(entity);
-        return new ResponseEntity<>("Clothes created", HttpStatus.CREATED);
+        ClotheDTO dto = DozerMapper.parseObject(repo.save(entity), ClotheDTO.class);
+        dto.add(linkTo(methodOn(ClotheController.class).findAll()).withSelfRel());
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
     public ResponseEntity<ClotheDTO> update(ClotheDTO clotheDTO, Long id){
         Clothe entity = repo.findById(id).orElseThrow(() -> new ResourceNotFoundResponse("Clothe with this ID not found"));
         DozerMapper.updateClothe(clotheDTO, entity);
-        repo.save(entity);
-        return new ResponseEntity<>(DozerMapper.parseObject(entity, ClotheDTO.class), HttpStatus.CREATED);
+        ClotheDTO dto = DozerMapper.parseObject(repo.save(entity), ClotheDTO.class);
+        dto.add(linkTo(methodOn(ClotheController.class).findAll()).withSelfRel());
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
     public ResponseEntity<String> delete(Long id){
         var entity = repo.findById(id).orElseThrow(() -> new ResourceNotFoundResponse("Clothe with this ID not found"));
         repo.delete(entity);
-        return new ResponseEntity<>("Clothes deleted", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("Clothe deleted", HttpStatus.NO_CONTENT);
     }
 
 

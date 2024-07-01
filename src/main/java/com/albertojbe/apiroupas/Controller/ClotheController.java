@@ -29,7 +29,7 @@ public class ClotheController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addClothe(@RequestBody Clothe clothe){
+    public ResponseEntity<ClotheDTO> addClothe(@RequestBody ClotheDTO clothe){
         return services.create(clothe);
     }
 

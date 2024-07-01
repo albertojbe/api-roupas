@@ -9,16 +9,31 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.albertojbe</groupId>
-    <artifactId>api-roupas</artifactId>
+    <artifactId>ROUPAS-CRUD</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>api-roupas</name>
     <description>api-roupas</description>
     <url/>
     <licenses>
-        <license/>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+            <comments>A permissive license that allows for easy integration with other software.</comments>
+        </license>
     </licenses>
     <developers>
-        <developer/>
+        <developer>
+            <id>alberto_jbe</id>
+            <name>Alberto Cesar</name>
+            <email>albertocesar.be@gmail.com</email>
+            <url>http://github/albertojbe</url>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>-3</timezone>
+        </developer>
     </developers>
     <scm>
         <connection/>
